@@ -1,4 +1,6 @@
-import  com.dtolabs.rundeck.plugins.notification.NotificationPlugin
+import com.dtolabs.rundeck.plugins.notification.NotificationPlugin
+import groovy.json.JsonOutput
+
 
 rundeckPlugin(NotificationPlugin){
     title="Microsoft Teams notification Plugin"
@@ -9,20 +11,70 @@ rundeckPlugin(NotificationPlugin){
     }
 
     onstart { Map executionData,Map config ->
-        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '{\"text\": \"START job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded} - ${execution.href} \"}' ${configuration.webhook_url}" ].execute().text
-        true
+        type = "START"
+        color = "696969"
+        json_payload = JsonOutput.toJson([
+            title: "Rundeck Job Notification",
+            summary: "Rundeck Job Notification",
+            text: "${type} job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded}",
+            themeColor: "${color}",
+            potentialAction: [
+                [
+                    "@context": "http://schema.org",
+                    "@type": "ViewAction",
+                    name: "Seed job execution",
+                    target: ["${execution.href}"]
+                ]
+            ]
+        ])
+        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${json_payload}' ${configuration.webhook_url}" ].execute().text
+
+        return true
     }
 
     onfailure { Map executionData ->
+        type = "START"
+        color = "E81123"
         //Single argument, the configuration properties are available automatically
-        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '{\"text\": \"FAILURE job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded} - ${execution.href} \"}' ${configuration.webhook_url}" ].execute().text
-        true
+        json_payload = JsonOutput.toJson([
+            title: "Rundeck Job Notification",
+            summary: "Rundeck Job Notification",
+            text: "${type} job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded}",
+            themeColor: "${color}",
+            potentialAction: [
+                [
+                    "@context": "http://schema.org",
+                    "@type": "ViewAction",
+                    name: "Seed job execution",
+                    target: ["${execution.href}"]
+                ]
+            ]
+        ])
+        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${json_payload}' ${configuration.webhook_url}" ].execute().text
+
+        return true
     }
 
     onsuccess {
+        type = "START"
+        color = "228B22"
         //with no args, there is a "configuration" and an "execution" variable in the context
-        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '{\"text\": \"SUCCESS job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded} - ${execution.href} \"}' ${configuration.webhook_url}" ].execute().text
+        json_payload = JsonOutput.toJson([
+            title: "Rundeck Job Notification",
+            summary: "Rundeck Job Notification",
+            text: "${type} job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded}",
+            themeColor: "${color}",
+            potentialAction: [
+                [
+                    "@context": "http://schema.org",
+                    "@type": "ViewAction",
+                    name: "Seed job execution",
+                    target: ["${execution.href}"]
+                ]
+            ]
+        ])
+        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${json_payload}' ${configuration.webhook_url}" ].execute().text
 
-        true
+        return true
     }
 }
