@@ -10,13 +10,13 @@ rundeckPlugin(NotificationPlugin){
         webhook_url title:"Webhook URL", required: true, type:"String", description:"You may find it in Microsoft Teams Channel user interfaces by using Incomming Webhook connector via:  Channel Name -> Connectors -> Incomming Webhook"
     }
 
-    onstart { Map executionData,Map config ->
+    onstart {
         type = "START"
         color = "696969"
         json_payload = JsonOutput.toJson([
             title: "Rundeck Job Notification",
             summary: "Rundeck Job Notification",
-            text: "${type} job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded}",
+            text: "${type} job: #${execution.id}: project: ${execution.project}, group: ${execution.group}, name:${execution.name}, status: ${execution.status}, started at: ${execution.dateStarted}, job description: ${execution.description}",
             themeColor: "${color}",
             potentialAction: [
                 [
@@ -32,14 +32,14 @@ rundeckPlugin(NotificationPlugin){
         return true
     }
 
-    onfailure { Map executionData ->
+    onfailure {
         type = "START"
         color = "E81123"
         //Single argument, the configuration properties are available automatically
         json_payload = JsonOutput.toJson([
             title: "Rundeck Job Notification",
             summary: "Rundeck Job Notification",
-            text: "${type} job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded}",
+            text: "${type} job: #${execution.id}: project: ${execution.project}, group: ${execution.group}, name:${execution.name}, status: ${execution.status}, started at: ${execution.dateStarted}, ended at: ${execution.dateEnded}, job description: ${execution.description}",
             themeColor: "${color}",
             potentialAction: [
                 [
@@ -62,7 +62,7 @@ rundeckPlugin(NotificationPlugin){
         json_payload = JsonOutput.toJson([
             title: "Rundeck Job Notification",
             summary: "Rundeck Job Notification",
-            text: "${type} job: #${execution.id}: ${execution.project} ${execution.status} at ${execution.dateEnded}",
+            text: "${type} job: #${execution.id}: project: ${execution.project}, group: ${execution.group}, name:${execution.name}, status: ${execution.status}, started at: ${execution.dateStarted}, ended at: ${execution.dateEnded}, job description: ${execution.description}",
             themeColor: "${color}",
             potentialAction: [
                 [
