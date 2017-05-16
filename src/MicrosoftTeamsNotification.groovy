@@ -33,7 +33,7 @@ rundeckPlugin(NotificationPlugin){
     }
 
     onfailure {
-        type = "START"
+        type = "FAILURE"
         color = "E81123"
         //Single argument, the configuration properties are available automatically
         json_payload = JsonOutput.toJson([
@@ -56,7 +56,7 @@ rundeckPlugin(NotificationPlugin){
     }
 
     onsuccess {
-        type = "START"
+        type = "SUCCESS"
         color = "228B22"
         //with no args, there is a "configuration" and an "execution" variable in the context
         json_payload = JsonOutput.toJson([
