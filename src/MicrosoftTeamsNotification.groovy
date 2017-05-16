@@ -16,7 +16,7 @@ rundeckPlugin(NotificationPlugin){
         json_payload = JsonOutput.toJson([
             title: "Rundeck Job Notification",
             summary: "Rundeck Job Notification",
-            text: "${type} job id: #${execution.job.id}: job project: ${execution.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}",
+            text: "${type} job id: #${execution.job.id}, job project: ${execution.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}",
             themeColor: "${color}",
             potentialAction: [
                 [
@@ -39,7 +39,7 @@ rundeckPlugin(NotificationPlugin){
         json_payload = JsonOutput.toJson([
             title: "Rundeck Job Notification",
             summary: "Rundeck Job Notification",
-            text: "${type} job id: #${execution.job.id}: job project: ${execution.job.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}, execution ended at: ${execution.dateEnded}",
+            text: "${type} job id: #${execution.job.id}, job project: ${execution.job.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}, execution ended at: ${execution.dateEnded}",
             themeColor: "${color}",
             potentialAction: [
                 [
@@ -62,7 +62,7 @@ rundeckPlugin(NotificationPlugin){
         json_payload = JsonOutput.toJson([
             title: "Rundeck Job Notification",
             summary: "Rundeck Job Notification",
-            text: "${type} job id: #${execution.job.id}: job project: ${execution.job.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}, execution ended at: ${execution.dateEnded}",
+            text: "${type} job id: #${execution.job.id}, job project: ${execution.job.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}, execution ended at: ${execution.dateEnded}",
             themeColor: "${color}",
             potentialAction: [
                 [
