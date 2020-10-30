@@ -77,4 +77,27 @@ rundeckPlugin(NotificationPlugin){
 
         return true
     }
+    
+    onretryablefailure {
+        type = "RETRY"
+        color = "FFB900"
+        //Single argument, the configuration properties are available automatically
+        json_payload = JsonOutput.toJson([
+            title: "[${type}] Rundeck Job Notification - ${execution.project}:${execution.job.group}:${execution.job.name}",
+            summary: "Rundeck Job Notification",
+            text: "job id: #${execution.job.id}, job project: ${execution.job.project}, job group: ${execution.job.group}, job name: ${execution.job.name}, job description: ${execution.job.description}, execution id: #${execution.id}, execution status: ${execution.status}, execution started at: ${execution.dateStarted}, execution ended at: ${execution.dateEnded}",
+            themeColor: "${color}",
+            potentialAction: [
+                [
+                    "@context": "http://schema.org",
+                    "@type": "ViewAction",
+                    name: "Seed job execution",
+                    target: ["${execution.href}"]
+                ]
+            ]
+        ])
+        process = [ 'bash', '-c', "curl -v -k -X POST -H \"Content-Type: application/json\" -d '${json_payload}' ${configuration.webhook_url}" ].execute().text
+
+        return true
+    }
 }
