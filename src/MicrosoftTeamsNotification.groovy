@@ -21,7 +21,7 @@ rundeckPlugin(NotificationPlugin){
             potentialAction: [
                 [
                     "@context": "http://schema.org",
-                    "@type": "ViewAction",
+                    "@type": "ActionCard",
                     name: "Seed job execution",
                     target: ["${execution.href}"]
                 ]
@@ -44,7 +44,7 @@ rundeckPlugin(NotificationPlugin){
             potentialAction: [
                 [
                     "@context": "http://schema.org",
-                    "@type": "ViewAction",
+                    "@type": "ActionCard",
                     name: "Seed job execution",
                     target: ["${execution.href}"]
                 ]
@@ -67,7 +67,7 @@ rundeckPlugin(NotificationPlugin){
             potentialAction: [
                 [
                     "@context": "http://schema.org",
-                    "@type": "ViewAction",
+                    "@type": "ActionCard",
                     name: "Seed job execution",
                     target: ["${execution.href}"]
                 ]
